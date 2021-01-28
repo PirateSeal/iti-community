@@ -2,8 +2,18 @@
   <form nz-form nzLayout="vertical" name="registerForm" [formGroup]="registerForm" (ngSubmit)="submit()">
     <nz-form-item>
       <nz-form-label nzFor="username" nzRequired>Nom d'utilisateur</nz-form-label>
-      <nz-form-control nzErrorTip="Veuillez choisir un nom d'utilisateur !">
-        <input class="ant-input" type="text" name="username" id="username" formControlName="username" autocomplete="username">
+      <nz-form-control nzHasFeedback [nzErrorTip]="userExisting">
+        <input class="ant-input"
+               type="text"
+               name="username"
+               id="username"
+               formControlName="username"
+               autocomplete="username">
+        <ng-template #userExisting>
+          <ng-container *ngIf="registerForm.get('username')!.hasError('exists')">
+            Ce pseudo est déjà utilisé
+          </ng-container>
+        </ng-template>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -16,11 +26,11 @@
 
     <nz-form-item>
       <nz-form-label nzFor="confirm-password" nzRequired>Confirmation du mot de passe</nz-form-label>
-      <nz-form-control nzHasFeedBack [nzErrorTip]="confirmPasswordError">
+      <nz-form-control nzHasFeedback [nzErrorTip]="confirmPasswordError">
         <input class="ant-input" type="password" name="confirm-password" id="confirm-password"
                formControlName="confirmPassword" autocomplete="new-password">
         <ng-template #confirmPasswordError>
-          <ng-container *ngIf="registerForm.get('confirmPassword')!.hasError('missmatch')">
+          <ng-container *ngIf="registerForm.get('confirmPassword')!.hasError('mismatch')">
             Les mots de passe ne correspondent pas
           </ng-container>
         </ng-template>
@@ -28,7 +38,8 @@
     </nz-form-item>
     <nz-form-item>
       <nz-form-control>
-        <button class="register-button" nz-button nzType="default" [disabled]="registerForm.invalid">S'enregistrer</button>
+        <button class="register-button" nz-button nzType="default" [disabled]="registerForm.invalid">S'enregistrer
+        </button>
       </nz-form-control>
     </nz-form-item>
   </form>

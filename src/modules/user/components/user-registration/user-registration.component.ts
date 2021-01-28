@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
-  NgForm,
+  AbstractControl,
   FormBuilder,
   FormGroup,
+  NgForm,
   Validators,
-  AbstractControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { UserQueries } from '../../services/user.queries';
 
 class UserRegistrationFormModel {
   username = '';
@@ -23,14 +24,15 @@ class UserRegistrationFormModel {
 export class UserRegistrationComponent implements OnInit {
   @ViewChild('f')
   form: NgForm;
-
   public registerForm: FormGroup;
+  userUnique = false;
   model = new UserRegistrationFormModel();
 
   constructor(
     private router: Router,
     private userService: UserService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private userQueries: UserQueries
   ) {
     this.registerForm = this.formBuilder.group(
       {
@@ -39,7 +41,10 @@ export class UserRegistrationComponent implements OnInit {
         confirmPassword: ['', Validators.required],
       },
       {
-        validator: this.areEquals('password', 'confirmPassword', 'mismatch'),
+        validators: [
+          this.userExists('username', 'exists'),
+          this.areEquals('password', 'confirmPassword', 'mismatch'),
+        ],
       }
     );
   }
@@ -79,6 +84,16 @@ export class UserRegistrationComponent implements OnInit {
         }
 
         abstractControlB.setErrors({ [errorKey]: true });
+      }
+    };
+  };
+
+  private userExists = (userPath: string, errorKey: string = 'exist') => {
+    return async (abstractControl: AbstractControl): Promise<null | void> => {
+      const userAbstractControl = abstractControl.get(userPath);
+
+      if (await this.userQueries.exists(userAbstractControl?.value)) {
+        userAbstractControl?.setErrors({ [errorKey]: true });
       }
     };
   };
