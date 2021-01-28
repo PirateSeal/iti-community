@@ -1,49 +1,58 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RoomType } from '../../room.model';
 import { RoomService } from '../../services/room.service';
 
 export class CreateRoomFormModel {
-  name: string = "";
+  name = '';
   type: RoomType = RoomType.Text;
 }
 
 @Component({
   selector: 'app-room-create-modal',
   templateUrl: './room-create-modal.component.html',
-  styleUrls: ['./room-create-modal.component.less']
+  styleUrls: ['./room-create-modal.component.less'],
 })
 export class RoomCreateModalComponent implements OnInit {
-  @ViewChild("f")
+  @ViewChild('f')
   form: NgForm;
 
-  isVisible: boolean = false;
+  @Output()
+  refresh: EventEmitter<any> = new EventEmitter();
+
+  isVisible = false;
   model = new CreateRoomFormModel();
 
-  constructor(private roomService: RoomService) {
+  constructor(private roomService: RoomService) {}
 
-  }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
-
-  async onOk() {
+  async onOk(): Promise<void> {
     if (this.form.form.valid) {
-      // TODO invoquer la méthode create du RoomService
+      await this.roomService.create(this.model.name, this.model.type);
+      if (this.refresh) {
+        this.refresh.emit();
+      }
       this.close();
     }
   }
 
-  onCancel() {
+  onCancel(): void {
     this.close();
   }
 
-  open() {
+  open(): void {
     this.form.resetForm(new CreateRoomFormModel());
     this.isVisible = true;
   }
 
-  close() {
+  close(): void {
     this.isVisible = false;
   }
 }
