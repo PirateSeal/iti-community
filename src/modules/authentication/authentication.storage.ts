@@ -7,9 +7,9 @@ import { AuthenticationState } from './authentication.state';
  */
 @Injectable()
 export class AuthenticationStorage extends TypedLocalStorage<AuthenticationState | null> {
-    public static readonly STORAGE_KEY = "iti.authentication";
+  public static readonly STORAGE_KEY = 'iti.authentication';
 
-    constructor() {
-        super(AuthenticationStorage.STORAGE_KEY, null);
-    }
+  constructor() {
+    super(AuthenticationStorage.STORAGE_KEY, null);
+  }
 }

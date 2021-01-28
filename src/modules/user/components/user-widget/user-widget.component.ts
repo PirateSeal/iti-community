@@ -11,7 +11,7 @@ import { NotificationStore } from 'src/modules/notification/notification.store';
 @Component({
   selector: 'app-user-widget',
   templateUrl: './user-widget.component.html',
-  styleUrls: ['./user-widget.component.less']
+  styleUrls: ['./user-widget.component.less'],
 })
 export class UserWidgetComponent implements OnInit {
   @Output()
@@ -30,25 +30,30 @@ export class UserWidgetComponent implements OnInit {
     private store: UserStore
   ) {
     this.user$ = store.user$;
-    this.photoUrl$ = store.get(s => s.user && s.user.photoUrl ? s.user.photoUrl : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/434px-Unknown_person.jpg");
+    this.photoUrl$ = store.get((s) =>
+      s.user && s.user.photoUrl
+        ? s.user.photoUrl
+        : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/434px-Unknown_person.jpg'
+    );
     this.hasUnread$ = notificationStore.hasUnread$;
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  fireToggleNotifications(): void {
+    this.toggleNotifications.emit();
   }
 
-  fireToggleNotificaions() {
-      this.toggleNotifications.emit();
-  }
-
-  logout() {
+  logout(): void {
     this.modalService.confirm({
-      nzTitle: "Déconnexion",
-      nzContent: "Êtes-vous sûr(e) de vouloir déconnecter votre session ?",
-      nzOkText: "Déconnexion",
-      nzOnOk: () => {
-        // TODO logout puis rediriger vers "/splash/login"
-      }
+      nzTitle: 'Déconnexion',
+      nzContent: 'Êtes-vous sûr(e) de vouloir déconnecter votre session ?',
+      nzOkText: 'Déconnexion',
+      nzOnOk: async () => {
+        // TODO Logout http
+        window.localStorage.clear();
+        await this.router.navigate(['/splash/login']);
+      },
     });
   }
 }

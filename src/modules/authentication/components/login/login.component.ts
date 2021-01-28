@@ -59,7 +59,6 @@ export class LoginComponent implements OnInit {
     await this.router.navigate(['/']);
 
     try {
-      // TODO vérifier le résultat de l'authentification. Rediriger sur "/" en cas de succès ou afficher une erreur en cas d'échec
       const authenticate = await this.authService.authenticate(
         login.username,
         login.password

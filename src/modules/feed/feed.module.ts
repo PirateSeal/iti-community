@@ -21,19 +21,29 @@ import { HttpPostQueries } from './services/plateform/http/post.queries.http';
 import { FeedSocketService } from './services/feed.socket.service';
 
 @NgModule({
-  declarations: [FeedComponent, PostComponent, PostAttachementImageComponent, PostAttachementVideoComponent, PostAttachementAudioComponent, PostAttachementYoutubeComponent],
+  declarations: [
+    FeedComponent,
+    PostComponent,
+    PostAttachementImageComponent,
+    PostAttachementVideoComponent,
+    PostAttachementAudioComponent,
+    PostAttachementYoutubeComponent,
+  ],
   exports: [FeedComponent, PostComponent],
-  providers: [PostMapper, PostService, FeedStore, {
-    provide: PostCommands,
-    useClass: LocalPostCommands
-  }, {
+  providers: [
+    PostMapper,
+    PostService,
+    FeedStore,
+    {
+      provide: PostCommands,
+      useClass: LocalPostCommands,
+    },
+    {
       provide: PostQueries,
-      useClass: LocalPostQueries
-    }],
-  imports: [
-    CommonModule,
-    UserModule,
-    NzIconModule
-  ]
+      useClass: LocalPostQueries,
+    },
+    FeedSocketService,
+  ],
+  imports: [CommonModule, UserModule, NzIconModule],
 })
-export class FeedModule { }
+export class FeedModule {}
