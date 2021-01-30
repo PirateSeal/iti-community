@@ -41,6 +41,7 @@ export class UserRegistrationComponent implements OnInit {
       },
       {
         validators: [
+          //TODO retirer le validator pour s'enregistrer
           this.userExists('username', 'exists'),
           this.areEquals('password', 'confirmPassword', 'mismatch'),
         ],
