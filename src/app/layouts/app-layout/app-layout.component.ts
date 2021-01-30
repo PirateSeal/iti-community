@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthenticationStore } from 'src/modules/authentication/authentication.store';
 import { WebsocketConnection } from 'src/modules/common/WebsocketConnection';

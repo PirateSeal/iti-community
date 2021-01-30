@@ -10,8 +10,7 @@ import { AuthenticationModule } from 'src/modules/authentication/authentication.
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NZ_I18N } from 'ng-zorro-antd/i18n';
-import { fr_FR } from 'ng-zorro-antd/i18n';
+import { fr_FR, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import fr from '@angular/common/locales/fr';
 import { NzFormModule } from 'ng-zorro-antd/form';
@@ -26,6 +25,7 @@ import { NotificationModule } from 'src/modules/notification/notification.module
 import { WebsocketConnection } from 'src/modules/common/WebsocketConnection';
 import { SocketIoWebsocketConnection } from 'src/modules/common/SocketIoWebsocketConnection';
 import { WebSocketTopic } from 'src/modules/common/WebSocketTopic';
+
 const ws = new SocketIoWebsocketConnection();
 
 registerLocaleData(fr);
