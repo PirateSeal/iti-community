@@ -25,7 +25,6 @@ export class UserRegistrationComponent implements OnInit {
   @ViewChild('f')
   form: NgForm;
   public registerForm: FormGroup;
-  userUnique = false;
   model = new UserRegistrationFormModel();
 
   constructor(
@@ -94,6 +93,8 @@ export class UserRegistrationComponent implements OnInit {
 
       if (await this.userQueries.exists(userAbstractControl?.value)) {
         userAbstractControl?.setErrors({ [errorKey]: true });
+      } else {
+        return null;
       }
     };
   };
