@@ -36,11 +36,11 @@ import { FeedSocketService } from './services/feed.socket.service';
     FeedStore,
     {
       provide: PostCommands,
-      useClass: LocalPostCommands,
+      useClass: HttpPostCommands,
     },
     {
       provide: PostQueries,
-      useClass: LocalPostQueries,
+      useClass: HttpPostQueries,
     },
     FeedSocketService,
   ],

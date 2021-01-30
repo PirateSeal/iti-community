@@ -12,4 +12,4 @@
     <button nz-button nzType="default" nzDanger nzGhost (click)="logout()"><i nz-icon nzType="logout"></i></button>
   </div>
 </div>
-<app-user-profile-modal #modal [user]="user$ | async"></app-user-profile-modal>
+<app-user-profile-modal (refresh)="refreshImage()" #modal [user]="user$ | async"></app-user-profile-modal>

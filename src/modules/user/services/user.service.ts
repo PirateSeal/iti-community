@@ -10,34 +10,35 @@ export class UserService {
     private queries: UserQueries,
     private commands: UserCommands,
     private store: UserStore
-  ) {
-  }
+  ) {}
 
   async register(username: string, password: string): Promise<void> {
     await this.commands.register(username, password);
   }
 
   async update(user: {
-    id: string,
-    username?: string,
-    photo?: File
+    id: string;
+    username?: string;
+    photo?: File;
   }): Promise<void> {
     const usr = await this.commands.update(user);
-    this.store.mutate(s => {
+    this.store.mutate((s) => {
       return {
-        user: usr
-      }
+        user: usr,
+      };
     });
   }
 
-  async fetchInfo(): Promise<void> {
+  async fetchInfo(): Promise<User> {
     const user = await this.queries.getUserInfo();
-    this.store.mutate(s => {
+    this.store.mutate((s) => {
       return {
         ...s,
-        user
+        user,
       };
-    })
+    });
+
+    return user;
   }
 
   search(token: string): Promise<User[]> {

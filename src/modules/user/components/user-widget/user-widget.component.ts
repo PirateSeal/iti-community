@@ -44,6 +44,14 @@ export class UserWidgetComponent implements OnInit {
     this.toggleNotifications.emit();
   }
 
+  refreshImage(): void {
+    this.photoUrl$ = this.store.get((s) =>
+      s.user && s.user.photoUrl
+        ? s.user.photoUrl
+        : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/434px-Unknown_person.jpg'
+    );
+  }
+
   logout(): void {
     this.modalService.confirm({
       nzTitle: 'Déconnexion',
